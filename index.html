@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FixappIA | Asistente Técnico Inteligente</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; color: #222; }
-    header { background: #0f2239; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-    header img { height: 50px; }
-    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    .hero { text-align: center; padding: 60px 20px; background: linear-gradient(to right, #f26522, #0f2239); color: white; }
-    .hero h1 { font-size: 2.8rem; margin-bottom: 10px; }
-    .hero p { font-size: 1.2rem; margin-bottom: 20px; }
-    .hero button { padding: 12px 24px; font-size: 1rem; background: white; color: #0f2239; border: none; cursor: pointer; font-weight: bold; border-radius: 6px; }
-    section { padding: 40px 20px; max-width: 1000px; margin: auto; }
-    section h2 { color: #0f2239; margin-bottom: 20px; }
-    .categorias { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-    .categoria { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
-    form { display: flex; flex-direction: column; gap: 12px; background: white; padding: 20px; border-radius
+<div id="flags" style="display: flex; gap: 10px;">
+  <img src="https://flagcdn.com/24x18/es.png" style="cursor:pointer;" onclick="translateLanguage('es')" alt="Español" title="Español">
+  <img src="https://flagcdn.com/24x18/us.png" style="cursor:pointer;" onclick="translateLanguage('en')" alt="English" title="English">
+  <img src="https://flagcdn.com/24x18/it.png" style="cursor:pointer;" onclick="translateLanguage('it')" alt="Italiano" title="Italiano">
+  <img src="https://flagcdn.com/24x18/fr.png" style="cursor:pointer;" onclick="translateLanguage('fr')" alt="Français" title="Français">
+  <img src="https://flagcdn.com/24x18/br.png" style="cursor:pointer;" onclick="translateLanguage('pt')" alt="Português" title="Português">
+  <img src="https://flagcdn.com/24x18/cn.png" style="cursor:pointer;" onclick="translateLanguage('zh-CN')" alt="中文" title="中文 (Chino)">
+</div>
+<div id="google_translate_element" style="display:none;"></div>
