@@ -1,19 +1,33 @@
-
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FixappIA | Asistente Técnico Inteligente</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; color: #222; }
     header { background: #0f2239; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-    header img.logo { height: 50px; }
-    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+    header img { height: 50px; }
+    nav { display: flex; align-items: center; gap: 15px; }
+    nav a { color: white; text-decoration: none; font-weight: bold; }
+    .lang-select { display: flex; align-items: center; gap: 10px; }
+    .lang-select img { height: 20px; width: auto; }
     .hero { text-align: center; padding: 60px 20px; background: linear-gradient(to right, #f26522, #0f2239); color: white; }
     .hero h1 { font-size: 2.8rem; margin-bottom: 10px; }
     .hero p { font-size: 1.2rem; margin-bottom: 20px; }
-    .hero button { padding: 12px 24px; font-size: 1rem; background: white; color: #0f2239; border: none; cursor: pointer; font-weight: bold; border-radius: 6px; }
+    .search-container { display: flex; justify-content: center; align-items: center; margin-top: 20px; }
+    .search-container input[type="text"] {
+      width: 60%; padding: 12px 20px; font-size: 1rem;
+      border-radius: 6px 0 0 6px; border: none;
+      background-color: white; color: #0f2239;
+      font-style: italic;
+    }
+    .search-container button {
+      padding: 12px; background: white;
+      border: none; cursor: pointer; border-radius: 0 6px 6px 0;
+    }
+    .search-container button img {
+      height: 24px; vertical-align: middle;
+    }
     section { padding: 40px 20px; max-width: 1000px; margin: auto; }
     section h2 { color: #0f2239; margin-bottom: 20px; }
     .categorias { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
@@ -22,79 +36,40 @@
     form input, form button { padding: 10px; font-size: 1rem; }
     form button { background: #0f2239; color: white; border: none; font-weight: bold; cursor: pointer; }
     footer { background: #0f2239; color: white; text-align: center; padding: 20px; font-size: 0.9rem; }
-    .lang-select { display: flex; align-items: center; gap: 8px; }
-    .lang-select img { height: 20px; vertical-align: middle; }
+    .powered-by { font-size: 0.8rem; color: white; margin-top: 10px; }
   </style>
-  <script>
-    const translations = {
-      "es": {
-        "queEs": "¿Qué es FixappIA?",
-        "descripcion": "Una plataforma con inteligencia artificial que ayuda a técnicos y supervisores de mantenimiento a resolver fallas, consultar procedimientos y acceder a manuales en segundos."
-      },
-      "en": {
-        "queEs": "What is FixappIA?",
-        "descripcion": "An AI-powered platform that helps maintenance technicians and supervisors troubleshoot issues, access procedures, and find manuals in seconds."
-      },
-      "it": {
-        "queEs": "Cos'è FixappIA?",
-        "descripcion": "Una piattaforma con intelligenza artificiale che aiuta i tecnici e i supervisori della manutenzione a risolvere guasti, consultare procedure e accedere ai manuali in pochi secondi."
-      },
-      "fr": {
-        "queEs": "Qu'est-ce que FixappIA ?",
-        "descripcion": "Une plateforme d'intelligence artificielle qui aide les techniciens et superviseurs de maintenance à résoudre des pannes, consulter des procédures et accéder à des manuels en quelques secondes."
-      },
-      "pt": {
-        "queEs": "O que é o FixappIA?",
-        "descripcion": "Uma plataforma de inteligência artificial que ajuda técnicos e supervisores de manutenção a resolver falhas, consultar procedimentos e acessar manuais em segundos."
-      },
-      "cn": {
-        "queEs": "什么是FixappIA？",
-        "descripcion": "一个人工智能平台，可帮助维修技术人员和主管快速解决故障、查询操作程序和访问手册。"
-      }
-    };
-    function cambiarIdioma(select) {
-      const idioma = select.value;
-      document.getElementById("que-es-titulo").innerText = translations[idioma].queEs;
-      document.getElementById("que-es-texto").innerText = translations[idioma].descripcion;
-    }
-  </script>
 </head>
 <body>
   <header>
-    <img src="logowebfixappia.png" alt="FixappIA logo" class="logo">
+    <img src="logowebfixappia.png" alt="FixappIA logo">
     <nav>
-      <a href="#que-es">Qué es</a>
-      <a href="#categorias">Categorías</a>
-      <a href="#beneficios">Beneficios</a>
-      <a href="#registro">Registro</a>
-      <span class="lang-select">
-        <img src="flags/es.png" alt="Español">
-        <img src="flags/us.png" alt="English">
-        <img src="flags/it.png" alt="Italiano">
-        <img src="flags/fr.png" alt="Français">
-        <img src="flags/br.png" alt="Português">
-        <img src="flags/cn.png" alt="中文">
-        <select onchange="cambiarIdioma(this)">
+      <a href="#que-es" data-i18n="nav.que_es">Qué es</a>
+      <a href="#categorias" data-i18n="nav.categorias">Categorías</a>
+      <a href="#beneficios" data-i18n="nav.beneficios">Beneficios</a>
+      <a href="#registro" data-i18n="nav.registro">Registro</a>
+      <div class="lang-select">
+        <img src="flags/es.png" alt="ES">
+        <select id="languageSwitcher">
           <option value="es">Español</option>
           <option value="en">English</option>
           <option value="it">Italiano</option>
           <option value="fr">Français</option>
           <option value="pt">Português</option>
-          <option value="cn">中文</option>
+          <option value="zh">中文</option>
         </select>
-      </span>
+      </div>
     </nav>
-  </header>
-
-  <div class="hero">
-    <h1>FixappIA</h1>
-    <p>Tu nuevo asistente técnico inteligente para mantenimiento</p>
-    <button>Probar FixappIA gratis</button>
-  </div>
-
-  <section id="que-es">
-    <h2 id="que-es-titulo">¿Qué es FixappIA?</h2>
-    <p id="que-es-texto">Una plataforma con inteligencia artificial que ayuda a técnicos y supervisores de mantenimiento a resolver fallas, consultar procedimientos y acceder a manuales en segundos.</p>
+  </header>  <div class="hero">
+    <h1 data-i18n="hero.titulo">FixappIA</h1>
+    <p data-i18n="hero.descripcion">Tu nuevo asistente técnico inteligente para mantenimiento</p>
+    <div class="search-container">
+      <input type="text" placeholder="¿En qué te puedo ayudar?">
+      <button><img src="logowebfixappia.png" alt="Buscar"></button>
+    </div>
+    <div class="powered-by">Powered by ChatGPT / DeepSeek</div>
+  </div>  <section id="que-es">
+    <h2 data-i18n="que_es.titulo">¿Qué es FixappIA?</h2>
+    <p data-i18n="que_es.descripcion">Una plataforma con inteligencia artificial que ayuda a técnicos y supervisores de mantenimiento a resolver fallas, consultar procedimientos y acceder a manuales en segundos.</p>
   </section>
 </body>
 </html>
