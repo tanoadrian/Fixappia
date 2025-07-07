@@ -17,3 +17,98 @@
     section { padding: 40px 20px; max-width: 1000px; margin: auto; }
     section h2 { color: #0f2239; margin-bottom: 20px; }
     .categorias { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .categoria { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+    form { display: flex; flex-direction: column; gap: 12px; background: white; padding: 20px; border-radius: 8px; }
+    form input, form button { padding: 10px; font-size: 1rem; }
+    form button { background: #0f2239; color: white; border: none; font-weight: bold; cursor: pointer; }
+    footer { background: #0f2239; color: white; text-align: center; padding: 20px; font-size: 0.9rem; }
+    #flags img { width: 24px; height: 18px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="https://tanoadrian.github.io/Fixappia/logowebfixappia.png" alt="Logo FixappIA">
+    <nav>
+      <a href="#que-es">Qué es</a>
+      <a href="#categorias">Categorías</a>
+      <a href="#beneficios">Beneficios</a>
+      <a href="#registro">Registro</a>
+      <div id="flags">
+        <img src="flags/es.png" style="cursor:pointer;" onclick="translateLanguage('es')" alt="Español" title="Español">
+        <img src="flags/us.png" style="cursor:pointer;" onclick="translateLanguage('en')" alt="English" title="English">
+        <img src="flags/it.png" style="cursor:pointer;" onclick="translateLanguage('it')" alt="Italiano" title="Italiano">
+        <img src="flags/fr.png" style="cursor:pointer;" onclick="translateLanguage('fr')" alt="Français" title="Français">
+        <img src="flags/br.png" style="cursor:pointer;" onclick="translateLanguage('pt')" alt="Português" title="Português">
+        <img src="flags/cn.png" style="cursor:pointer;" onclick="translateLanguage('zh')" alt="中文" title="中文 (Chino)">
+      </div>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>FixappIA</h1>
+    <p>Tu nuevo asistente técnico inteligente para mantenimiento</p>
+    <button>Probar FixappIA gratis</button>
+  </div>
+
+  <section id="que-es">
+    <h2>¿Qué es FixappIA?</h2>
+    <p>Una plataforma con inteligencia artificial que ayuda a técnicos y supervisores de mantenimiento a resolver fallas, consultar procedimientos y acceder a manuales en segundos.</p>
+  </section>
+
+  <section id="categorias">
+    <h2>¿Qué podés consultar?</h2>
+    <div class="categorias">
+      <div class="categoria"><strong>HVAC</strong><br>"Cómo purgar un sistema VRF"</div>
+      <div class="categoria"><strong>Electricidad</strong><br>"Verificación de interruptores térmicos"</div>
+      <div class="categoria"><strong>Frío Comercial</strong><br>"Diagnóstico de baja presión en cámaras frigoríficas"</div>
+      <div class="categoria"><strong>Plomería</strong><br>"Cómo actuar ante una pérdida en cisterna"</div>
+    </div>
+  </section>
+
+  <section id="beneficios">
+    <h2>¿Qué beneficios tiene?</h2>
+    <ul>
+      <li>📘 Acceso inmediato a conocimientos técnicos</li>
+      <li>⏱ Ahorro de tiempo en diagnósticos</li>
+      <li>📱 Compatible con dispositivos móviles</li>
+      <li>🌎 Multilingüe y adaptable</li>
+    </ul>
+  </section>
+
+  <section id="registro">
+    <h2>Registrate para el acceso anticipado</h2>
+    <form>
+      <input type="text" placeholder="Nombre" required />
+      <input type="email" placeholder="Correo electrónico" required />
+      <button type="submit">Quiero recibir acceso</button>
+    </form>
+  </section>
+
+  <footer>
+    © 2025 FixappIA · Todos los derechos reservados
+  </footer>
+
+  <!-- Google Translate script -->
+  <div id="google_translate_element" style="display:none;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'es',
+        includedLanguages: 'es,en,it,fr,pt,zh',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+
+    function translateLanguage(lang) {
+      const select = document.querySelector("select.goog-te-combo");
+      if (select) {
+        select.value = lang;
+        select.dispatchEvent(new Event("change"));
+      }
+    }
+  </script>
+  <script type="text/javascript" 
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+  </script>
+</body>
+</html>
