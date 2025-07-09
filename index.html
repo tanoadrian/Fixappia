@@ -3,10 +3,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FixappIA | Asistente Técnico Inteligente</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f5f5f5; color: #222; }
+    header { background: #0f2239; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+    header img { height: 50px; }
+    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
+    .hero { text-align: center; padding: 60px 20px; background: linear-gradient(to right, #f26522, #0f2239); color: white; }
+    .hero h1 { font-size: 2.8rem; margin-bottom: 10px; }
+    .hero p { font-size: 1.2rem; margin-bottom: 20px; }
+    .hero input[type="text"] { width: 60%; padding: 12px; font-size: 1rem; border-radius: 6px; border: none; margin-bottom: 10px; }
+    .hero button { padding: 12px 24px; font-size: 1rem; background: white; color: #0f2239; border: none; cursor: pointer; font-weight: bold; border-radius: 6px; }
+    section { padding: 40px 20px; max-width: 1000px; margin: auto; }
+    section h2 { color: #0f2239; margin-bottom: 20px; }
+    footer { background: #0f2239; color: white; text-align: center; padding: 20px; font-size: 0.9rem; }
+    #respuestaIA { margin-top: 20px; font-weight: bold; color: #0f2239; background: #e1ecf4; padding: 10px; border-radius: 6px; }
+  </style>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";const firebaseConfig = {
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";const firebaseConfig = {
   apiKey: "AIzaSyC0HCxnBj3TXLnDQb7x8HAtV2sTbImNtt0",
   authDomain: "fixappiatech.firebaseapp.com",
   projectId: "fixappiatech",
@@ -19,7 +34,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore();
 
-document.getElementById("registerBtn").addEventListener("click", async () => {
+const registerBtn = document.getElementById("registerBtn");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const consultaInput = document.getElementById("consulta");
+const respuestaIA = document.getElementById("respuestaIA");
+const buscarBtn = document.getElementById("buscarBtn");
+
+if (registerBtn) registerBtn.addEventListener("click", async () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   try {
@@ -27,7 +49,8 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
     await setDoc(doc(db, "users", userCredential.user.uid), {
       email: email,
       tipoUsuario: "free",
-      consultas: 0
+      consultas: 0,
+      ultimoAcceso: serverTimestamp()
     });
     alert("Usuario registrado correctamente");
   } catch (error) {
@@ -35,7 +58,7 @@ document.getElementById("registerBtn").addEventListener("click", async () => {
   }
 });
 
-document.getElementById("loginBtn").addEventListener("click", async () => {
+if (loginBtn) loginBtn.addEventListener("click", async () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   try {
@@ -44,6 +67,11 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
   } catch (error) {
     alert("Error al iniciar sesión: " + error.message);
   }
+});
+
+if (logoutBtn) logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  location.reload();
 });
 
 onAuthStateChanged(auth, async (user) => {
@@ -56,8 +84,27 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-document.getElementById("logoutBtn").addEventListener("click", async () => {
-  await signOut(auth);
+async function consultarIA(pregunta) {
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer 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",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: "openai/gpt-3.5-turbo",
+      messages: [{ role: "user", content: pregunta }]
+    })
+  });
+  const data = await response.json();
+  respuestaIA.innerText = data.choices[0].message.content;
+}
+
+if (buscarBtn) buscarBtn.addEventListener("click", async () => {
+  const pregunta = consultaInput.value;
+  if (!pregunta) return;
+  respuestaIA.innerText = "Consultando...";
+  await consultarIA(pregunta);
 });
 
   </script>
@@ -66,15 +113,21 @@ document.getElementById("logoutBtn").addEventListener("click", async () => {
   <header>
     <h1>FixappIA</h1>
     <p id="userStatus">No has iniciado sesión.</p>
-  </header>  <main>
-    <section>
-      <h2>Iniciar sesión / Registrarse</h2>
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Contraseña" required />
-      <button id="registerBtn">Registrarse</button>
-      <button id="loginBtn">Iniciar sesión</button>
-      <button id="logoutBtn">Cerrar sesión</button>
-    </section>
-  </main>
+  </header>  <div class="hero">
+    <h1>FixappIA</h1>
+    <p>Tu nuevo asistente técnico inteligente para mantenimiento</p>
+    <input type="text" id="consulta" placeholder="¿En qué puedo ayudarte?" />
+    <button id="buscarBtn">Buscar</button>
+    <div id="respuestaIA"></div>
+  </div>  <section>
+    <h2>Iniciar sesión / Registrarse</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Contraseña" required />
+    <button id="registerBtn">Registrarse</button>
+    <button id="loginBtn">Iniciar sesión</button>
+    <button id="logoutBtn">Cerrar sesión</button>
+  </section>  <footer>
+    <p>Powered by OpenRouter & ChatGPT - FixappIA 2025</p>
+  </footer>
 </body>
 </html>
