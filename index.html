@@ -4,6 +4,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FixappIA</title>
   <style>
+    // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyC0HCxnBj3TXLnDQb7x8HAtV2sTbImNtt0",
+  authDomain: "fixappiatech.firebaseapp.com",
+  projectId: "fixappiatech",
+  storageBucket: "fixappiatech.firebasestorage.app",
+  messagingSenderId: "419524266719",
+  appId: "1:419524266719:web:392376b0ff6557b22eb76a"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
     body {
       font-family: Arial, sans-serif;
       margin: 0;
